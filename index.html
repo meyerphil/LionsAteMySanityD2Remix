@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang=""en">
+<head>
+    <meta charset=""UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmptyThrone</title>
+    <script src="./lib/phaser.js"></script>
+    <script>
+        class Title extends Phaser.Scene
+        {
+            constructor()
+            {
+                super({ key: 'Title'})
+            }
+
+            preload()
+            {
+                this.load.image('castle', 'assets/bg/castle.png')
+                this.load.image('logo', 'assets/img/logo.png')
+                this.load.audio('title', ['assets/music/Regal Reminiscence-Instrumental.mp3', 'assets/music/Regal Reminiscence-Instrumental.wav'])
+            }
+
+            create()
+            {
+                var castle = this.add.image(310, 230, 'castle');
+                castle.setDepth(0)
+                var Moon = this.add.circle(70, 70, 50, 0xfefcd7)
+                var tri = this.add.triangle(410, 360, 100, -100, -100, -100, 0, 100, 0xFFD700, 0.75);
+                this.add.image(310,230, 'logo')
+                this.sound.add('title');
+                this.input.once('pointerdown', () => {
+                    this.scene.start('Teaser');
+                });
+            }
+        }
+        class Teaser extends Phaser.Scene
+        {
+            constructor()
+            {
+                super({ key: 'Teaser'})
+            }
+
+            preload()
+            {
+                this.load.image('ruins', 'assets/bg/ruins.png')
+                this.load.audio('teaser', 'assets/music/Regal Ruins.wav')
+                this.load.image('sword', 'assets/img/sword.png')
+            }
+
+            create()
+            {
+                var ruins = this.add.image(310, 230, 'ruins')
+                ruins.setDepth(0)
+                var sword = this.add.image(175, -100, 'sword');
+                sword.angle = 135
+                this.tweens.add({
+                    targets: sword,
+                    y: 430,
+                    duration: 400,
+                    ease: 'linear'
+                })
+                var box = this.add.rectangle(310, 690, 620, 460, 0x000000)
+                var Moon = this.add.circle(70, 70, 50, 0xfefcd7)
+                var teaser = this.sound.add('teaser', { loop: true });
+                teaser.play()
+                this.input.once('pointerdown', () => {
+                    this.cameras.main.fadeOut()
+                    this.time.delayedCall(1000, () => {
+                        this.scene.start('Menu');
+                        teaser.stop()
+                    });
+                });
+            }
+        }
+        class Menu extends Phaser.Scene
+        {
+            constructor()
+            {
+                super({ key: 'Menu'})
+            }
+
+            preload()
+            {
+                this.load.image('fortress', 'assets/bg/fortress.png')
+                this.load.audio('menu', ['assets/music/Regal Reminiscence-Instrumental.mp3', 'assets/music/Regal Reminiscence-Instrumental.wav'])
+            }
+
+            create()
+            {
+                this.cameras.main.fadeIn()
+                this.add.image(310, 230, 'fortress')
+                var menu = this.sound.add('menu', {loop: true});
+                this.add.rectangle(310, 400, 225, 70, 0x000000, 0.5);
+                this.add.text(213, 380, "New Game    Continue\nSettings    Extras", {
+                    stroke: '#000',
+                    strokeThickness: 2
+                });
+                menu.play();
+            }
+        }
+        const config = {
+            width: 620,
+            heigt: 230,
+            scene: [ Menu, Title, Teaser ],
+            audio: {
+            disableWebAudio: true
+            }
+        };
+
+        const game = new Phaser.Game(config)
+    </script>
+</head></html>
