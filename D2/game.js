@@ -5,7 +5,7 @@ class CForest extends AdventureScene {
 
     onEnter() {
     let crystal = this.add.text(this.w * 0.3, this.w * 0.3, "Crystal")
-        .setFontSize(this.s * 2)
+        .setFontSize(this.s * 4)
         .setInteractive()
         .on('pointerover', () => this.showMessage("Shiny, yet deadly sharp"))
         .on('pointerdown', () => {
@@ -14,7 +14,7 @@ class CForest extends AdventureScene {
         });
 
         let door = this.add.text(this.w * 0.5, this.w * 0.1, "🚪 Tower Door")
-            .setFontSize(this.s * 2)
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => {
                 if(!(this.hasItem("Tower Key"))) {
@@ -35,7 +35,7 @@ class CForest extends AdventureScene {
             })
 
         let west = this.add.text(this.w * 0.1, this.w * 0.15, "Go West")
-            .setFontSize(this.s * 2)
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("You see a lake off in the distance");
@@ -52,7 +52,7 @@ class Lake extends AdventureScene {
     }
     onEnter() {
         this.add.text(this.w * 0.3, this.w * 0.4, "Go East")
-            .setFontSize(this.s * 2)
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("You're done here");
@@ -63,6 +63,7 @@ class Lake extends AdventureScene {
 
         if(!(this.hasItem('Tower Key'))) {
             let tkey = this.add.text(this.w * 0.6, this.w * 0.2, 'Rusty Key')
+                .setFontSize(this.s * 4)
                 .setInteractive()
                 .on('pointerover', () => {
                     this.showMessage('An old, rusty key in the middle of the lake');
@@ -82,7 +83,7 @@ class Tower extends AdventureScene {
     }
     onEnter() {
         this.add.text(this.w * 0.3, this.w * 0.4, "Go Back")
-            .setFontSize(this.s * 2)
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("You're done here");
@@ -92,7 +93,7 @@ class Tower extends AdventureScene {
             });
 
             let handle = this.add.text(this.w * 0.2, this.w * 0.5, "Brass Handle")
-            .setFontSize(this.s * 2)
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => this.showMessage("A rusted door handle. It looks like it goes somewhere"))
             .on('pointerdown', () => {
@@ -102,7 +103,7 @@ class Tower extends AdventureScene {
             });
 
             let door = this.add.text(this.w * 0.5, this.w * 0.1, "🚪 Staircase Door")
-            .setFontSize(this.s * 2)
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => {
                 if(!(this.hasItem("handle"))) {
@@ -130,7 +131,7 @@ class Wizard extends AdventureScene {
     }
     onEnter() {
         this.add.text(this.w * 0.3, this.w * 0.4, "Go Back")
-            .setFontSize(this.s * 2)
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => {
                 this.showMessage("You're done here");
@@ -139,8 +140,8 @@ class Wizard extends AdventureScene {
                 this.gotoScene('Tower');
             });
 
-            let ball = this.add.text(this.w * 0.3, this.w * 0.4, "Crystal Ball")
-            .setFontSize(this.s * 2)
+            let ball = this.add.text(this.w * 0.3, this.w * 0.1, "Crystal Ball")
+            .setFontSize(this.s * 4)
             .setInteractive()
             .on('pointerover', () => this.showMessage("Your father's crystal ball, and the reason you came here."))
             .on('pointerdown', () => {
@@ -156,13 +157,19 @@ class Intro extends Phaser.Scene {
     constructor() {
         super('intro')
     }
+    preload(){
+        this.load.image("code","code.png");
+    }
     create() {
-        this.add.text(50,50, "You awaken in a forest of frozen trees.\nA tower looms in front of you, containing your ultimate goal:\nyour father's crystal ball").setFontSize(50);
-        this.add.text(50,250, "Click anywhere to begin.").setFontSize(20);
+        this.add.text(50,50, "You awaken in a forest of frozen trees.\nA tower looms in front of you, containing your ultimate goal:\nyour father's crystal ball").setFontSize(75);
+        this.add.text(500,500, "Touch anywhere to begin.").setFontSize(75);
         this.input.on('pointerdown', () => {
             this.cameras.main.fade(1000, 0,0,0);
             this.time.delayedCall(1000, () => this.scene.start('c4'));
         });
+
+        this.add.sprite(250,600,"code").setScale(1.5);
+
     }
 }
 
@@ -171,8 +178,8 @@ class Outro extends Phaser.Scene {
         super('outro');
     }
     create() {
-        this.add.text(50, 50, "You hurry out of the tower with the ball to present it to your father.").setFontSize(50);
-        this.add.text(50, 100, "Click anywhere to restart.").setFontSize(20);
+        this.add.text(50, 50, "You hurry out of the tower with the ball to present it to your father.").setFontSize(75);
+        this.add.text(500, 500, "Touch anywhere to restart.").setFontSize(75);
         this.input.on('pointerdown', () => this.scene.start('intro'));
     }
 }

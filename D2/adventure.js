@@ -22,15 +22,15 @@ class AdventureScene extends Phaser.Scene {
         this.add.rectangle(this.w * 0.75, 0, this.w * 0.25, this.h).setOrigin(0, 0).setFillStyle(0);
         this.add.text(this.w * 0.75 + this.s, this.s)
             .setText(this.name)
-            .setStyle({ fontSize: `${3 * this.s}px` })
+            .setStyle({ fontSize: `${6 * this.s}px` })
             .setWordWrapWidth(this.w * 0.25 - 2 * this.s);
         
         this.messageBox = this.add.text(this.w * 0.75 + this.s, this.h * 0.33)
-            .setStyle({ fontSize: `${2 * this.s}px`, color: '#eea' })
+            .setStyle({ fontSize: `${4 * this.s}px`, color: '#eea' })
             .setWordWrapWidth(this.w * 0.25 - 2 * this.s);
 
         this.inventoryBanner = this.add.text(this.w * 0.75 + this.s, this.h * 0.66)
-            .setStyle({ fontSize: `${2 * this.s}px` })
+            .setStyle({ fontSize: `${4 * this.s}px` })
             .setText("Inventory")
             .setAlpha(0);
 
@@ -38,7 +38,7 @@ class AdventureScene extends Phaser.Scene {
         this.updateInventory();
 
         this.add.text(this.w-3*this.s, this.h-3*this.s, "📺")
-            .setStyle({ fontSize: `${2 * this.s}px` })
+            .setStyle({ fontSize: `${4 * this.s}px` })
             .setInteractive({useHandCursor: true})
             .on('pointerover', () => this.showMessage('Fullscreen?'))
             .on('pointerdown', () => {
@@ -84,7 +84,7 @@ class AdventureScene extends Phaser.Scene {
         let h = this.h * 0.66 + 3 * this.s;
         this.inventory.forEach((e, i) => {
             let text = this.add.text(this.w * 0.75 + 2 * this.s, h, e)
-                .setStyle({ fontSize: `${1.5 * this.s}px` })
+                .setStyle({ fontSize: `${3 * this.s}px` })
                 .setWordWrapWidth(this.w * 0.75 + 4 * this.s);
             h += text.height + this.s;
             this.inventoryTexts.push(text);
